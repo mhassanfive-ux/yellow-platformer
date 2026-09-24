@@ -1,0 +1,174 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="TileSet" path="res://tilesets/snow_tileset.tres" id="2_tileset"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Backgrounds/Default/background_solid_sky.png" id="3_sky"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Backgrounds/Default/background_clouds.png" id="4_clouds"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Backgrounds/Default/background_solid_cloud.png" id="4b_cloudsolid"]
+[ext_resource type="Script" path="res://scripts/kill_zone.gd" id="5_killzone"]
+[ext_resource type="Script" path="res://scripts/level.gd" id="6_level"]
+[ext_resource type="PackedScene" path="res://scenes/Ladder.tscn" id="7_ladder"]
+[ext_resource type="PackedScene" path="res://scenes/Star.tscn" id="8_star"]
+[ext_resource type="PackedScene" path="res://scenes/HUD.tscn" id="9_hud"]
+[ext_resource type="PackedScene" path="res://scenes/Checkpoint.tscn" id="10_checkpoint"]
+[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="11_goal"]
+[ext_resource type="PackedScene" path="res://scenes/Spikes.tscn" id="12_spikes"]
+[ext_resource type="PackedScene" path="res://scenes/Spring.tscn" id="13_spring"]
+[ext_resource type="PackedScene" path="res://scenes/MovingPlatform.tscn" id="14_movingplatform"]
+[ext_resource type="PackedScene" path="res://scenes/CrumblingPlatform.tscn" id="15_crumbling"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(32, 3560.0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_killzone"]
+size = Vector2(1280, 200)
+
+[node name="Level05" type="Node2D"]
+script = ExtResource("6_level")
+bounds = Rect2(0, 192.0, 640, 2560.0)
+has_rival = false
+
+[node name="SkyLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Sky" type="TextureRect" parent="SkyLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_sky")
+stretch_mode = 1
+
+[node name="CloudsBackground" type="Sprite2D" parent="."]
+position = Vector2(-64.0, 64.0)
+centered = false
+texture = ExtResource("4_clouds")
+texture_repeat = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 768, 2816.0)
+
+[node name="CloudCeiling" type="Sprite2D" parent="."]
+position = Vector2(320, 864.0)
+centered = true
+texture = ExtResource("4b_cloudsolid")
+scale = Vector2(2.75, 5.25)
+modulate = Color(1, 1, 1, 0.6)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 0, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 1, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 1, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 2, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 2, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 3, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 3, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 4, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 4, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 5, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 5, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 6, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 6, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 7, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 7, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 8, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 8, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 9, 0, 40, 0, 0, 0, 5, 0, 14, 0, 0, 0, 9, 0, 41, 0, 0, 0, 2, 0, 14, 0, 0, 0, 0, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 0, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 1, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 1, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 2, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 2, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 3, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 3, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 4, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 4, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 5, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 5, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 6, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 6, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 7, 0, 32, 0, 0, 0, 5, 0, 14, 0, 0, 0, 7, 0, 33, 0, 0, 0, 2, 0, 14, 0, 0, 0, 8, 0, 32, 0, 0, 0, 7, 0, 14, 0, 0, 0, 8, 0, 33, 0, 0, 0, 4, 0, 14, 0, 0, 0, 6, 0, 28, 0, 0, 0, 13, 0, 14, 0, 0, 0, 7, 0, 28, 0, 0, 0, 14, 0, 14, 0, 0, 0, 8, 0, 28, 0, 0, 0, 17, 0, 14, 0, 0, 0, 0, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 1, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 2, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 3, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 4, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 4, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 5, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 6, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 6, 0, 25, 0, 0, 0, 2, 0, 14, 0, 0, 0, 7, 0, 24, 0, 1, 0, 0, 0, 0, 0, 0, 0, 7, 0, 25, 0, 0, 0, 4, 0, 14, 0, 0, 0, 1, 0, 16, 0, 0, 0, 6, 0, 14, 0, 0, 0, 1, 0, 17, 0, 0, 0, 3, 0, 14, 0, 0, 0, 2, 0, 16, 0, 0, 0, 7, 0, 14, 0, 0, 0, 2, 0, 17, 0, 0, 0, 4, 0, 14, 0, 0, 0, 7, 0, 16, 0, 0, 0, 6, 0, 14, 0, 0, 0, 7, 0, 17, 0, 0, 0, 3, 0, 14, 0, 0, 0, 8, 0, 16, 0, 0, 0, 5, 0, 14, 0, 0, 0, 8, 0, 17, 0, 0, 0, 2, 0, 14, 0, 0, 0, 9, 0, 16, 0, 0, 0, 5, 0, 14, 0, 0, 0, 9, 0, 17, 0, 0, 0, 2, 0, 14, 0, 0, 0, 0, 0, 8, 0, 0, 0, 5, 0, 14, 0, 0, 0, 0, 0, 9, 0, 0, 0, 2, 0, 14, 0, 0, 0, 1, 0, 8, 0, 0, 0, 5, 0, 14, 0, 0, 0, 1, 0, 9, 0, 0, 0, 2, 0, 14, 0, 0, 0, 2, 0, 8, 0, 0, 0, 5, 0, 14, 0, 0, 0, 2, 0, 9, 0, 0, 0, 2, 0, 14, 0, 0, 0, 3, 0, 8, 0, 0, 0, 7, 0, 14, 0, 0, 0, 3, 0, 9, 0, 0, 0, 4, 0, 14, 0, 0, 0, 8, 0, 8, 0, 0, 0, 6, 0, 14, 0, 0, 0, 8, 0, 9, 0, 0, 0, 3, 0, 14, 0, 0, 0)
+tile_set = ExtResource("2_tileset")
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(96.0, 2528.0)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(96.0, 2528.0)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-16, 1472.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(656, 1472.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="KillZone" type="Area2D" parent="."]
+position = Vector2(320, 2848.0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("5_killzone")
+spawn_point_path = NodePath("../PlayerSpawn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+shape = SubResource("RectangleShape2D_killzone")
+
+[node name="Ladders" type="Node2D" parent="."]
+
+[node name="Ladder0" parent="Ladders" instance=ExtResource("7_ladder")]
+position = Vector2(608, 2048)
+height_tiles = 8
+
+[node name="Ladder1" parent="Ladders" instance=ExtResource("7_ladder")]
+position = Vector2(544, 1536)
+height_tiles = 4
+
+[node name="Ladder2" parent="Ladders" instance=ExtResource("7_ladder")]
+position = Vector2(32, 1024)
+height_tiles = 8
+
+[node name="Ladder3" parent="Ladders" instance=ExtResource("7_ladder")]
+position = Vector2(608, 512)
+height_tiles = 8
+
+[node name="Spring" parent="." instance=ExtResource("13_spring")]
+position = Vector2(288.0, 2048.0)
+
+[node name="Hazards" type="Node2D" parent="."]
+
+[node name="Spikes1" parent="Hazards" instance=ExtResource("12_spikes")]
+position = Vector2(288.0, 2560.0)
+
+[node name="Spikes2" parent="Hazards" instance=ExtResource("12_spikes")]
+position = Vector2(288.0, 1536.0)
+
+[node name="MovingPlatform" parent="." instance=ExtResource("14_movingplatform")]
+position = Vector2(204.0, 1056.0)
+tiles = 2
+travel_offset = Vector2(168.0, 0.0)
+speed = 90.0
+
+[node name="CrumblingPlatforms" type="Node2D" parent="."]
+
+[node name="Crumbling1" parent="CrumblingPlatforms" instance=ExtResource("15_crumbling")]
+position = Vector2(480.0, 544.0)
+
+[node name="Crumbling2" parent="CrumblingPlatforms" instance=ExtResource("15_crumbling")]
+position = Vector2(416.0, 544.0)
+
+[node name="Crumbling3" parent="CrumblingPlatforms" instance=ExtResource("15_crumbling")]
+position = Vector2(352.0, 544.0)
+
+[node name="Crumbling4" parent="CrumblingPlatforms" instance=ExtResource("15_crumbling")]
+position = Vector2(288.0, 544.0)
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Star1" parent="Stars" instance=ExtResource("8_star")]
+position = Vector2(416.0, 2528.0)
+
+[node name="Star2" parent="Stars" instance=ExtResource("8_star")]
+position = Vector2(480.0, 1760.0)
+
+[node name="Star3" parent="Stars" instance=ExtResource("8_star")]
+position = Vector2(160.0, 1504.0)
+
+[node name="Star4" parent="Stars" instance=ExtResource("8_star")]
+position = Vector2(288.0, 992.0)
+
+[node name="Star5" parent="Stars" instance=ExtResource("8_star")]
+position = Vector2(416.0, 480.0)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Checkpoint1" parent="Checkpoints" instance=ExtResource("10_checkpoint")]
+position = Vector2(544.0, 2560.0)
+
+[node name="Checkpoint2" parent="Checkpoints" instance=ExtResource("10_checkpoint")]
+position = Vector2(480.0, 1536.0)
+
+[node name="Checkpoint3" parent="Checkpoints" instance=ExtResource("10_checkpoint")]
+position = Vector2(544.0, 1024.0)
+
+[node name="Goal" parent="." instance=ExtResource("11_goal")]
+position = Vector2(96.0, 512.0)
+
+[node name="HUD" parent="." instance=ExtResource("9_hud")]
+show_key_slot = false
+show_rival_counter = false

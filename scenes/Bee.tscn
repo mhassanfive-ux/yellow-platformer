@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/bee.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Vector/Enemies/bee_a.svg" id="2_bee_a"]
+[ext_resource type="Texture2D" path="res://assets/Vector/Enemies/bee_b.svg" id="3_bee_b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bee"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bee_a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bee_b")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bee"]
+radius = 20.0
+
+[node name="Bee" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bee")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bee")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_bee")

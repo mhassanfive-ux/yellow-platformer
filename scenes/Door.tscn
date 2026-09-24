@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/door.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Tiles/Default/door_closed.png" id="2_bottom"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Tiles/Default/door_closed_top.png" id="3_top"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Tiles/Default/lock_yellow.png" id="4_lock"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(36, 100)
+
+[node name="Door" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="Bottom" type="Sprite2D" parent="."]
+position = Vector2(0, -32)
+texture = ExtResource("2_bottom")
+
+[node name="Top" type="Sprite2D" parent="."]
+position = Vector2(0, -96)
+texture = ExtResource("3_top")
+
+[node name="LockIcon" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -150)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_lock")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -56)
+shape = SubResource("RectangleShape2D_door")

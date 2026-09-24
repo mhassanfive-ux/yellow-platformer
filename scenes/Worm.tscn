@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/worm.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Enemies/Default/worm_normal_rest.png" id="2_rest"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Enemies/Default/worm_normal_move_a.png" id="3_move_a"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Enemies/Default/worm_normal_move_b.png" id="4_move_b"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_worm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rest")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_move_a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_move_b")
+}],
+"loop": true,
+"name": &"chase",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_worm"]
+radius = 26.0
+
+[node name="Worm" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_worm")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_worm")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_worm")

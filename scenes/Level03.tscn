@@ -1,0 +1,155 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_player"]
+[ext_resource type="TileSet" path="res://tilesets/stone_tileset.tres" id="2_tileset"]
+[ext_resource type="Script" path="res://scripts/kill_zone.gd" id="8_killzone"]
+[ext_resource type="Script" path="res://scripts/level.gd" id="9_level"]
+[ext_resource type="PackedScene" path="res://scenes/Star.tscn" id="11_star"]
+[ext_resource type="PackedScene" path="res://scenes/HUD.tscn" id="18_hud"]
+[ext_resource type="PackedScene" path="res://scenes/Goal.tscn" id="20_goal"]
+[ext_resource type="PackedScene" path="res://scenes/Fish.tscn" id="21_fish"]
+[ext_resource type="PackedScene" path="res://scenes/Worm.tscn" id="22_worm"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Tiles/Default/rock.png" id="23_rock"]
+[ext_resource type="Texture2D" path="res://assets/Sprites/Tiles/Default/water.png" id="24_water"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(32, 1600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_killzone"]
+size = Vector2(3200, 200)
+
+[node name="Level03" type="Node2D"]
+script = ExtResource("9_level")
+bounds = Rect2(0, 0, 2560, 896)
+has_rival = false
+
+[node name="BackdropLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Backdrop" type="ColorRect" parent="BackdropLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.086, 0.302, 0.482, 1)
+
+[node name="WaterFill" type="Sprite2D" parent="."]
+z_index = -5
+texture = ExtResource("24_water")
+centered = false
+texture_repeat = 2
+region_enabled = true
+region_rect = Rect2(0, 0, 2560, 896)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 4, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 8, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 19, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 27, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 3, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 14, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 30, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 5, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 8, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 5, 0, 0, 0, 8, 0, 15, 0, 0, 0, 21, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 16, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 36, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 7, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 1, 0, 0, 0, 8, 0, 15, 0, 0, 0, 38, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 33, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 10, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 7, 0, 0, 0, 8, 0, 15, 0, 0, 0, 6, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 10, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 11, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 30, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 9, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 3, 0, 0, 0, 8, 0, 15, 0, 0, 0, 15, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 12, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 9, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 3, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 12, 0, 0, 0, 8, 0, 15, 0, 0, 0, 17, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 28, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 36, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 12, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 23, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 2, 0, 0, 0, 8, 0, 15, 0, 0, 0, 32, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 5, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 2, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 11, 0, 0, 0, 8, 0, 15, 0, 0, 0, 25, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 5, 0, 0, 0, 8, 0, 15, 0, 0, 0, 34, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 29, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 5, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 7, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 18, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 15, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 2, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 7, 0, 0, 0, 8, 0, 15, 0, 0, 0, 22, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 9, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 4, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 24, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 32, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 8, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 19, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 35, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 9, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 6, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 9, 0, 0, 0, 8, 0, 15, 0, 0, 0, 37, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 21, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 5, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 1, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 2, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 11, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 11, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 2, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 11, 0, 0, 0, 8, 0, 15, 0, 0, 0, 38, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 3, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 14, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 22, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 4, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 4, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 1, 0, 0, 0, 8, 0, 15, 0, 0, 0, 16, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 35, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 11, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 4, 0, 0, 0, 8, 0, 15, 0, 0, 0, 20, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 31, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 33, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 28, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 17, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 6, 0, 0, 0, 8, 0, 15, 0, 0, 0, 1, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 6, 0, 0, 0, 8, 0, 15, 0, 0, 0, 34, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 10, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 8, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 8, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 8, 0, 0, 0, 8, 0, 15, 0, 0, 0, 12, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 23, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 20, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 7, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 18, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 31, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 27, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 1, 0, 0, 0, 8, 0, 15, 0, 0, 0, 25, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 9, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 10, 0, 0, 0, 8, 0, 15, 0, 0, 0, 39, 0, 1, 0, 0, 0, 8, 0, 15, 0, 0, 0, 29, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 13, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 24, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 10, 0, 0, 0, 8, 0, 15, 0, 0, 0, 37, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 3, 0, 0, 0, 8, 0, 15, 0, 0, 0, 2, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 10, 0, 13, 0, 0, 0, 8, 0, 15, 0, 0, 0, 0, 0, 12, 0, 0, 0, 8, 0, 15, 0, 0, 0, 6, 0, 0, 0, 0, 0, 8, 0, 15, 0, 0, 0, 26, 0, 12, 0, 0, 0, 8, 0, 15, 0, 0, 0)
+tile_set = ExtResource("2_tileset")
+
+[node name="Decor" type="Node2D" parent="."]
+
+[node name="Rock1" type="Sprite2D" parent="Decor"]
+position = Vector2(352, 800)
+texture = ExtResource("23_rock")
+
+[node name="Rock2" type="Sprite2D" parent="Decor"]
+position = Vector2(1376, 800)
+texture = ExtResource("23_rock")
+
+[node name="Rock3" type="Sprite2D" parent="Decor"]
+position = Vector2(2208, 160)
+texture = ExtResource("23_rock")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(160, 480)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(160, 480)
+swimming = true
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-16, 448)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(2576, 448)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Worm1" parent="Enemies" instance=ExtResource("22_worm")]
+position = Vector2(416, 416)
+
+[node name="Worm2" parent="Enemies" instance=ExtResource("22_worm")]
+position = Vector2(1248, 352)
+
+[node name="Worm3" parent="Enemies" instance=ExtResource("22_worm")]
+position = Vector2(2144, 480)
+
+[node name="Fish" type="Node2D" parent="."]
+
+[node name="Fish1" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(224, 352)
+
+[node name="Fish2" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(608, 608)
+
+[node name="Fish3" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(1184, 544)
+
+[node name="Fish4" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(1440, 288)
+
+[node name="Fish5" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(2016, 352)
+
+[node name="Fish6" parent="Fish" instance=ExtResource("21_fish")]
+position = Vector2(2336, 608)
+
+[node name="KillZone" type="Area2D" parent="."]
+position = Vector2(1280, 992)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("8_killzone")
+spawn_point_path = NodePath("../PlayerSpawn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+shape = SubResource("RectangleShape2D_killzone")
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Star1" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(288, 224)
+
+[node name="Star2" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(480, 608)
+
+[node name="Star3" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(672, 352)
+
+[node name="Star4" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(1056, 224)
+
+[node name="Star5" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(1312, 608)
+
+[node name="Star6" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(1504, 416)
+
+[node name="Star7" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(1952, 544)
+
+[node name="Star8" parent="Stars" instance=ExtResource("11_star")]
+position = Vector2(2272, 288)
+
+[node name="Goal" parent="." instance=ExtResource("20_goal")]
+position = Vector2(2400, 480)
+next_level = "res://scenes/Level04.tscn"
+
+[node name="HUD" parent="." instance=ExtResource("18_hud")]
+show_key_slot = false
+show_rival_counter = false
