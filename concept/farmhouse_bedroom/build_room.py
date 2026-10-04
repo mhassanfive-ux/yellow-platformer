@@ -312,15 +312,19 @@ def build_camera_and_lights():
     area = bpy.data.lights.new('ceiling', 'AREA')
     area.shape = 'RECTANGLE'
     area.size, area.size_y = 6.5, 4.5
-    area.energy = 380
+    area.energy = 170
     area.color = (1.0, 0.96, 0.88)
     link(bpy.data.objects.new('ceiling', area)).location = (0, 0, 4.4)
 
-    sun = bpy.data.lights.new('fill', 'SUN')
-    sun.energy = 0.9
-    sun.angle = math.radians(20)
-    fill = link(bpy.data.objects.new('fill', sun))
-    fill.rotation_euler = (math.radians(42), 0, math.radians(-18))
+    # Key light from the top-left (the direction the sprites are shaded for), so
+    # furniture shadows fall forward and to the right where the camera sees them.
+    # Same direction as KeyLight in the Godot demo.
+    sun = bpy.data.lights.new('key', 'SUN')
+    sun.energy = 3.0
+    sun.angle = math.radians(4)
+    sun.color = (1.0, 0.97, 0.92)
+    key = link(bpy.data.objects.new('key', sun))
+    key.rotation_euler = Vector((0.497, -0.287, -0.819)).to_track_quat('-Z', 'Y').to_euler()
 
     # Warm ambient light, but a black void behind the cut-away room like the DS.
     world = bpy.data.worlds.new('world')
@@ -332,7 +336,7 @@ def build_camera_and_lights():
     nt = world.node_tree
     bg = nt.nodes['Background']
     bg.inputs['Color'].default_value = lin('#FFF1DC')
-    bg.inputs['Strength'].default_value = 0.35
+    bg.inputs['Strength'].default_value = 0.32
     black = nt.nodes.new('ShaderNodeBackground')
     black.inputs['Color'].default_value = (0, 0, 0, 1)
     path = nt.nodes.new('ShaderNodeLightPath')
@@ -380,6 +384,9 @@ def main():
     build_room()
     build_furniture()
     room = [o for o in bpy.context.scene.objects if o.type == 'MESH']
+    for o in room:   # the shell doesn't block the key light; furniture still casts
+        if o.name.startswith(('wall_', 'floor_', 'rail_', 'base_', 'stairwell_')):
+            o.visible_shadow = False
 
     shadow = prim('cylinder', 'shadow', vertices=12, radius=0.24, depth=0.01, location=(*PLAYER_AT, 0.025))
     shadow.scale = (1.0, 0.75, 1.0)
