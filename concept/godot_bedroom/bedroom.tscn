@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/bedroom.glb" id="1_e18cj"]
+[ext_resource type="Script" path="res://player.gd" id="2_ui2oe"]
+[ext_resource type="Texture2D" path="res://assets/player_overworld_32x32.png" id="3_o412v"]
+
+[sub_resource type="Environment" id="Environment_6d2g4"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 0.94509804, 0.8627451, 1)
+ambient_light_energy = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_885xx"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 0.4)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j12bj"]
+material = SubResource("StandardMaterial3D_885xx")
+top_radius = 0.24
+bottom_radius = 0.24
+height = 0.01
+radial_segments = 12
+
+[node name="Bedroom" type="Node3D"]
+
+[node name="Room" type="Node3D" parent="." instance=ExtResource("1_e18cj")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.68688375, 0.7267673, 0, -0.7267673, 0.68688375, 0, 8, 7.6)
+keep_aspect = 0
+current = true
+fov = 58.7
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_6d2g4")
+
+[node name="CeilingLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 0)
+light_color = Color(1, 0.96, 0.88, 1)
+light_energy = 0.75
+shadow_enabled = true
+omni_range = 9.0
+omni_attenuation = 0.6
+
+[node name="FillLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.95105654, 0.2296444, -0.20677271, 0, 0.66913056, 0.74314487, 0.309017, -0.7067728, 0.636381, 0, 0, 0)
+light_energy = 0.3
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.9)
+script = ExtResource("2_ui2oe")
+
+[node name="Sprite3D" type="Sprite3D" parent="Player"]
+offset = Vector2(0, 16)
+pixel_size = 0.038
+billboard = 1
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("3_o412v")
+hframes = 4
+
+[node name="Shadow" type="MeshInstance3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, 0.03, 0)
+mesh = SubResource("CylinderMesh_j12bj")
